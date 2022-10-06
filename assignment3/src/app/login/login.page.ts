@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AngularFireAuth } from '@angular/fire/compat/auth'
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
@@ -8,13 +9,25 @@ import { Router } from '@angular/router';
 })
 export class LoginPage implements OnInit {
 
-  constructor(private router: Router) { }
+  userDetails = {
+    email: '',
+    password: ''
+  }
+
+  constructor(private router: Router,
+                public ngFBAuth: AngularFireAuth) { }
 
   ngOnInit() {
   }
 
-  loginUser(){
-    this.router.navigate(['/home']);
+  async loginUser(){
+    const user = await this.ngFBAuth.signInWithEmailAndPassword(this.userDetails.email, this.userDetails.password);
+
+    if(user.user.email){
+      this.router.navigate(['/home/']);
+    } else {
+      alert('Please enter correct username and password');
+    }
   }
   goToSignup(){
     this.router.navigate(['/sign-up']);
