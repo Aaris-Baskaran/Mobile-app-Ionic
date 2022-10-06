@@ -18,4 +18,8 @@ ngOnInit() {
     this.router.navigate(['/camera']);
   }
 
+  goToImages(){
+    this.router.navigate(['/images']);
+  }
+
 }
