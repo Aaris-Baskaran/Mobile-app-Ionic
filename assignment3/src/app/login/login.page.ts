@@ -24,7 +24,7 @@ export class LoginPage implements OnInit {
     const user = await this.ngFBAuth.signInWithEmailAndPassword(this.userDetails.email, this.userDetails.password);
 
     if(user.user.email){
-      this.router.navigate(['/home/']);
+      this.router.navigate(['/home']);
     } else {
       alert('Please enter correct username and password');
     }

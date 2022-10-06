@@ -20,19 +20,19 @@
       <br>
       <br>
       <ion-item>
-        <ion-input placeholder="Username"></ion-input>
+        <ion-input [(ngModel)]="userDetails.email" placeholder="Username"></ion-input>
       </ion-item>
       <br>
       <ion-item>
-        <ion-input placeholder="Password" type="password"></ion-input>
+        <ion-input [(ngModel)]="userDetails.password" placeholder="Password" type="password"></ion-input>
       </ion-item>
       <br>
       <ion-item>
-        <ion-input placeholder="Type Password again" type="password"></ion-input>
+        <ion-input [(ngModel)]="userDetails.confirmPassword" placeholder="Type Password again" type="password"></ion-input>
       </ion-item>
       <br>
       <br>
-      <ion-button (click)="goToHome()">Sign Up</ion-button>
+      <ion-button (click)="registerUser()">Sign Up</ion-button>
       <br>
       <br>
       <br>

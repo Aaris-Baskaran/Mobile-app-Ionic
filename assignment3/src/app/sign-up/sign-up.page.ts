@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { AngularFireAuth } from '@angular/fire/compat/auth'
+
 @Component({
   selector: 'app-sign-up',
   templateUrl: './sign-up.page.html',
@@ -8,13 +10,25 @@ import { Router } from '@angular/router';
 })
 export class SignUpPage implements OnInit {
 
-  constructor(private router: Router) { }
+  userDetails = {
+    email: '',
+    password: '',
+    confirmPassword: ''
+  }
+
+  constructor(private router: Router,
+    public ngFBAuth: AngularFireAuth) { }
 
   ngOnInit() {
   }
-
-  goToHome(){
-    this.router.navigate(['/home'])
+  async registerUser(){
+    if(this.userDetails.password == this.userDetails.confirmPassword){
+      const user = await this.ngFBAuth.createUserWithEmailAndPassword(this.userDetails.email, this.userDetails.password);
+      this.router.navigate(['/home'])
+    } else {
+      alert('Passwords do not match');
+    }
   }
+
 
 }
