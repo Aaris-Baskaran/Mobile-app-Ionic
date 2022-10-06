@@ -10,35 +10,30 @@ import { CameraPageRoutingModule } from './camera-routing.module';
 
 import { CameraPage } from './camera.page';
 
-// @NgModule({
-//   imports: [
-//     CommonModule,
-//     FormsModule,
-//     IonicModule,
-//     CameraPageRoutingModule
-//   ],
-//   declarations: [CameraPage]
-// })
-
-@Component({
-  selector: 'app-camera',
-  templateUrl: './camera.page.html',
-  styleUrls: ['./camera.page.scss'],
+@NgModule({
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    CameraPageRoutingModule
+  ],
+  declarations: [CameraPage]
 })
 
+
 export class CameraPageModule {
-  picture: string;
+  // picture: string;
 
-  constructor() {}
+  // constructor() {}
 
-  async takePicture() {
-    const image = await Camera.getPhoto({
-      quality: 100,
-      allowEditing: false,
-      resultType: CameraResultType.DataUrl
-    });
+  // async takePicture() {
+  //   const image = await Camera.getPhoto({
+  //     quality: 100,
+  //     allowEditing: false,
+  //     resultType: CameraResultType.DataUrl
+  //   });
 
-    this.picture = image.dataUrl;
-  }
+  //   this.picture = image.dataUrl;
+  // }
 
 }
