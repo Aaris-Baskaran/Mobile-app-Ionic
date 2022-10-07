@@ -12,7 +12,7 @@ export class HomePage {
   constructor(private router: Router,
     public ngFBAuth: AngularFireAuth) { }
 
-ngOnInit() {
+ngOnInit() {    //functions for buttons to navigate to the different pages
 }
   goToCamera(){
     this.router.navigate(['/camera']);

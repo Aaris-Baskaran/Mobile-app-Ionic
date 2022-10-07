@@ -9,7 +9,7 @@ export class ImagesPage implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit() {    //displys the images from the database
   }
 
 }

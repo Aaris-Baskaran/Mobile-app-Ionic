@@ -7,6 +7,8 @@ import { AngularFireAuth } from '@angular/fire/compat/auth'
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
+
+// The login page is a component that allows the user to login to the app.
 export class LoginPage implements OnInit {
 
   userDetails = {
@@ -14,12 +16,14 @@ export class LoginPage implements OnInit {
     password: ''
   }
 
+  //initialise database and start the camera
   constructor(private router: Router,
                 public ngFBAuth: AngularFireAuth) { }
 
   ngOnInit() {
   }
 
+  // checks if users email and password are correct, otherwise displays an error message
   async loginUser(){
     try{
     const user = await this.ngFBAuth.signInWithEmailAndPassword(this.userDetails.email, this.userDetails.password);
@@ -29,6 +33,8 @@ export class LoginPage implements OnInit {
       } 
     }catch(e){alert('Please enter correct username and password');}
   }
+
+  // navigates to the sign-up page
   goToSignup(){
     this.router.navigate(['/sign-up']);
   }

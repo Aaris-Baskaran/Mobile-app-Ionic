@@ -10,39 +10,46 @@ import { AngularFireDatabase } from '@angular/fire/compat/database';
   styleUrls: ['./camera.page.scss'],
 })
 
+// The camera page is a component that allows the user to take a picture and store it in the database.
 export class CameraPage {
-  picture: any;
+  
+  picture: any;     // The picture variable is a string that stores the image data.
+  insights: string; // The feedback for the user
 
-  insights: string;
 
-
+  //initialise database and start the camera
   constructor(
     private db : AngularFireDatabase
   ) {
     this.takePicture();
   }
 
+  //takes a picture, and checks the luminance of the picture
   async takePicture() {
+
+    //open the camera and take the picture
     const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
       resultType: CameraResultType.DataUrl,
     });
 
-    this.picture = image.dataUrl;
+    this.picture = image.dataUrl; //store the image data in the picture variable
 
+    //Getting the luminance of the image
     const srcImg = new Image();
     srcImg.src = this.picture;
 
     const canvas = document.createElement('canvas');
     const ctx = canvas.getContext('2d');
-    //var avgLuminance = 0;
+    
     srcImg.onload = () => {
       canvas.width = srcImg.width;
       canvas.height = srcImg.height;  
 
       ctx.drawImage(srcImg, 0, 0, canvas.width, canvas.height);
 
+      //maths to get the average luminance
       var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
       var data = imageData.data;
       var numPixels = data.length / 4;
@@ -52,13 +59,13 @@ export class CameraPage {
         totalLuminance += avg;
       }
       
-      
+      //call the checkLuminance function
       this.checkLuminance(totalLuminance / numPixels);
     }
     
-    console.log(this.picture);
   }
 
+  //checks the luminance of the picture and gives feedback to the user
   checkLuminance(avgLuminance) {
     //check if avgLuminance is less than 128
     if (avgLuminance < 128) {
@@ -66,8 +73,6 @@ export class CameraPage {
       if (confirm("The average luminance is less than 128 do you want to save photo?") == true) {
         this.db.object('photo/' + new Date()).set({image : this.picture});
         }
-      //tell the user the average luminance is less than 128
-      
       //update insights
       this.insights = "The ambient lighting in your room is too low!\n\n\n"+
                       "Increase the brightness of the lights in your room!\n\n"+
