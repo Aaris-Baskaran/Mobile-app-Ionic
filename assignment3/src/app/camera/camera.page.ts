@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 
 import { Camera, CameraResultType } from '@capacitor/camera';
 
+import { AngularFireDatabase } from '@angular/fire/compat/database';
+
 @Component({
   selector: 'app-camera',
   templateUrl: './camera.page.html',
@@ -14,7 +16,9 @@ export class CameraPage {
   insights: string;
 
 
-  constructor() {
+  constructor(
+    private db : AngularFireDatabase
+  ) {
     this.takePicture();
   }
 
@@ -58,13 +62,10 @@ export class CameraPage {
   checkLuminance(avgLuminance) {
     //check if avgLuminance is less than 128
     if (avgLuminance < 128) {
-      var userPreference;
 
       if (confirm("The average luminance is less than 128 do you want to save photo?") == true) {
-        userPreference = "Data saved successfully!";
-      } else {
-        userPreference = "Save Cancelled!";
-}
+        this.db.object('photo/' + new Date()).set({image : this.picture});
+        }
       //tell the user the average luminance is less than 128
       
       //update insights
@@ -73,14 +74,16 @@ export class CameraPage {
                       "This level of brightness can cause eye strain and headaches!";
     } else if (avgLuminance > 200) {
       //tell the user the average luminance is greater than 228
-
+      if (confirm("The average luminance is greater than 200 do you want to save photo?") == true) {
+        this.db.object('photo/' + new Date()).set({image : this.picture});
+        }
       //update insights
       this.insights = "The ambient lighting in your room is too high!\n\n\n"+
                       "Reduce the brightness of the lights in your room!\n\n"+
                       "This level of brightness can cause eye strain and headaches!";
     } else {
       //save the image
-      
+      this.db.object('photo/' + new Date()).set({image : this.picture});
       //update insights
       this.insights = "The ambient lighting in your room is at a good level!\n\n\n"+
                       "Keep your lights at the same level of brightness!\n\n"+
