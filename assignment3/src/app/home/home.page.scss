@@ -25,9 +25,13 @@
 #container a {
   text-decoration: none;
 }
+
 ion-card .first{
 width: 60%; height: 60%; left: 20%;
 }
+ion-card .name{
+   left: 16%;
+  }
 ion-text{
   left: 25%;
 }
@@ -36,7 +40,7 @@ ion-content{
   --ion-background-color:#dedede;
 }
 ion-card {
-  background-color:#246EE9; // black
+  background-color:#246EE9; 
 }
 ion-card .second{
   width: 100%;
