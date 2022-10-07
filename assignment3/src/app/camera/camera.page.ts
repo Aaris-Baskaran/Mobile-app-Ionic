@@ -56,8 +56,15 @@ export class CameraPage {
   checkLuminance(avgLuminance) {
     //check if avgLuminance is less than 128
     if (avgLuminance < 128) {
+      var userPreference;
+
+      if (confirm("The average luminance is less than 128 do you want to save photo?") == true) {
+        userPreference = "Data saved successfully!";
+      } else {
+        userPreference = "Save Cancelled!";
+}
       //tell the user the average luminance is less than 128
-      alert("The average luminance is less than 128");
+      //alert("The average luminance is less than 128");
     } else if (avgLuminance > 200) {
       //tell the user the average luminance is greater than 228
       alert("The average luminance is greater than 228");
