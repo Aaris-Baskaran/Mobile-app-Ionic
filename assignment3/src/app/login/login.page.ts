@@ -21,13 +21,13 @@ export class LoginPage implements OnInit {
   }
 
   async loginUser(){
+    try{
     const user = await this.ngFBAuth.signInWithEmailAndPassword(this.userDetails.email, this.userDetails.password);
 
-    if(user.user.email){
-      this.router.navigate(['/home']);
-    } else {
-      alert('Please enter correct username and password');
-    }
+      if(user.user.email){
+        this.router.navigate(['/home']);
+      } 
+    }catch(e){alert('Please enter correct username and password');}
   }
   goToSignup(){
     this.router.navigate(['/sign-up']);

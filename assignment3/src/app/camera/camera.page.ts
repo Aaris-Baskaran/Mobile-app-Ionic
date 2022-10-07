@@ -21,7 +21,7 @@ export class CameraPage {
     const image = await Camera.getPhoto({
       quality: 100,
       allowEditing: false,
-      resultType: CameraResultType.DataUrl
+      resultType: CameraResultType.DataUrl,
     });
 
     this.picture = image.dataUrl;
