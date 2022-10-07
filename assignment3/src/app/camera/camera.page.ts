@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Camera, CameraResultType } from '@capacitor/camera';
 
@@ -13,9 +14,12 @@ import { CameraPageRoutingModule } from './camera-routing.module';
 })
 
 export class CameraPage {
-  picture: string;
+  picture: any;
+  //private sanitizer: DomSanitizer;
 
-  constructor() {}
+  constructor() {
+    this.takePicture();
+  }
 
   async takePicture() {
     const image = await Camera.getPhoto({
@@ -24,7 +28,18 @@ export class CameraPage {
       resultType: CameraResultType.DataUrl,
     });
 
-    this.picture = image.dataUrl;
+    this.picture = image.dataUrl;//sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+    
+    //create canvas from this.picture
+    // var canvas = document.createElement('canvas');
+    // var ctx = canvas.getContext('2d');
+    // ctx.drawImage(this.picture, 0, 0);
+    // var dataURL = canvas.toDataURL('image/png');
+    // //this.picture = dataURL;
+
+
+    // console.log(this.picture);
+    // console.log(dataURL); 
   }
 
 }

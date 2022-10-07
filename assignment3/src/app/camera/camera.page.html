@@ -1,18 +1,23 @@
 <ion-header>
   <ion-toolbar>
+<<<<<<< HEAD
+    <ion-title>Camera</ion-title>
+=======
     <ion-title>camera</ion-title>
-    <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
+>>>>>>> 5dfdeeedf152b9af8996afd72028713ef6025923
   </ion-toolbar>
 </ion-header>
-
 <ion-content>
-  <img [src]="picture" >
+  <img [src]="photo" >
 
   <ion-fab vertical="bottom" horizontal="center" slot="fixed">
     <ion-fab-button (click)="takePicture()">
       <ion-icon name="camera"></ion-icon>
     </ion-fab-button>
   </ion-fab>
+
+  <img [src]="picture" >
 </ion-content>
+
