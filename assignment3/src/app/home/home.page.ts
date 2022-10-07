@@ -22,4 +22,8 @@ ngOnInit() {
     this.router.navigate(['/images']);
   }
 
+  goToAbout(){
+    this.router.navigate(['/about']);
+  }
+
 }
