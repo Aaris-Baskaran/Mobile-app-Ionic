@@ -50,7 +50,6 @@ export class CameraPage {
     }
     
     console.log(this.picture);
-    console.log("hello");
   }
 
   checkLuminance(avgLuminance) {
