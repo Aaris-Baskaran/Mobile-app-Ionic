@@ -11,6 +11,9 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 export class CameraPage {
   picture: any;
 
+  insights: string;
+
+
   constructor() {
     this.takePicture();
   }
@@ -64,13 +67,25 @@ export class CameraPage {
         userPreference = "Save Cancelled!";
 }
       //tell the user the average luminance is less than 128
-      //alert("The average luminance is less than 128");
+      
+      //update insights
+      this.insights = "The ambient lighting in your room is too low!\n\n\n"+
+                      "Increase the brightness of the lights in your room!\n\n"+
+                      "This level of brightness can cause eye strain and headaches!";
     } else if (avgLuminance > 200) {
       //tell the user the average luminance is greater than 228
-      alert("The average luminance is greater than 228");
+
+      //update insights
+      this.insights = "The ambient lighting in your room is too high!\n\n\n"+
+                      "Reduce the brightness of the lights in your room!\n\n"+
+                      "This level of brightness can cause eye strain and headaches!";
     } else {
       //save the image
       
+      //update insights
+      this.insights = "The ambient lighting in your room is at a good level!\n\n\n"+
+                      "Keep your lights at the same level of brightness!\n\n"+
+                      "This level of brightness is good for your eyes and your productivity!";
     }
     console.log(avgLuminance);
   }
