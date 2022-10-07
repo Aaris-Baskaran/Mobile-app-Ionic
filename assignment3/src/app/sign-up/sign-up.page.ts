@@ -23,8 +23,12 @@ export class SignUpPage implements OnInit {
   }
   async registerUser(){
     if(this.userDetails.password == this.userDetails.confirmPassword){
+      try{
       const user = await this.ngFBAuth.createUserWithEmailAndPassword(this.userDetails.email, this.userDetails.password);
       this.router.navigate(['/home'])
+      } catch(e) {
+        alert('Password must have a length of atleast 6');
+      }
     } else {
       alert('Passwords do not match');
     }
