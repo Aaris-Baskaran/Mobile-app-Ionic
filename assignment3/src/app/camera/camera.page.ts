@@ -1,11 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 
 import { Camera, CameraResultType } from '@capacitor/camera';
-
-import { IonicModule } from '@ionic/angular';
-
-import { CameraPageRoutingModule } from './camera-routing.module';
 
 @Component({
   selector: 'app-camera',
@@ -15,7 +10,6 @@ import { CameraPageRoutingModule } from './camera-routing.module';
 
 export class CameraPage {
   picture: any;
-  //private sanitizer: DomSanitizer;
 
   constructor() {
     this.takePicture();
@@ -28,18 +22,50 @@ export class CameraPage {
       resultType: CameraResultType.DataUrl
     });
 
-    this.picture = image.dataUrl;//sanitizer.bypassSecurityTrustResourceUrl(image && (image.dataUrl));
+    this.picture = image.dataUrl;
+
+    const srcImg = new Image();
+    srcImg.src = this.picture;
+
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    //var avgLuminance = 0;
+    srcImg.onload = () => {
+      canvas.width = srcImg.width;
+      canvas.height = srcImg.height;  
+
+      ctx.drawImage(srcImg, 0, 0, canvas.width, canvas.height);
+
+      var imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+      var data = imageData.data;
+      var numPixels = data.length / 4;
+      var totalLuminance = 0;
+      for (var i = 0; i < data.length; i += 4) {
+        var avg = (data[i] + data[i + 1] + data[i + 2]) / 3;
+        totalLuminance += avg;
+      }
+      
+      
+      this.checkLuminance(totalLuminance / numPixels);
+    }
     
-    //create canvas from this.picture
-    // var canvas = document.createElement('canvas');
-    // var ctx = canvas.getContext('2d');
-    // ctx.drawImage(this.picture, 0, 0);
-    // var dataURL = canvas.toDataURL('image/png');
-    // //this.picture = dataURL;
+    console.log(this.picture);
+    console.log("hello");
+  }
 
-
-    // console.log(this.picture);
-    // console.log(dataURL); 
+  checkLuminance(avgLuminance) {
+    //check if avgLuminance is less than 128
+    if (avgLuminance < 128) {
+      //tell the user the average luminance is less than 128
+      alert("The average luminance is less than 128");
+    } else if (avgLuminance > 200) {
+      //tell the user the average luminance is greater than 228
+      alert("The average luminance is greater than 228");
+    } else {
+      //save the image
+      
+    }
+    console.log(avgLuminance);
   }
 
 }
